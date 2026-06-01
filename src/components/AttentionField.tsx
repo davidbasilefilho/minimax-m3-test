@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { clamp } from "../lib/motion";
 
-export function AttentionField() {
+export function AttentionField({ mode }: { mode: "msa" | "full" }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
-  const [mode, setMode] = useState<"msa" | "full">("msa");
   const mouseRef = useRef({ x: 0, y: 0, active: false });
 
   useEffect(() => {
@@ -295,43 +294,6 @@ export function AttentionField() {
         // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
         role="img"
       />
-      <div
-        style={{
-          position: "absolute",
-          top: 12,
-          right: 12,
-          display: "flex",
-          gap: 4,
-          padding: 3,
-          background: "rgba(10,5,5,0.7)",
-          border: "1px solid var(--line)",
-          borderRadius: 6,
-          backdropFilter: "blur(10px)",
-        }}
-        role="tablist"
-        aria-label="Attention mode">
-        {(["msa", "full"] as const).map((m) => (
-          <button
-            key={m}
-            role="tab"
-            aria-selected={mode === m}
-            onClick={() => setMode(m)}
-            style={{
-              padding: "5px 10px",
-              fontFamily: "var(--font-mono)",
-              fontSize: 10,
-              fontWeight: 600,
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              color: mode === m ? "var(--bg-0)" : "var(--cream-dim)",
-              background: mode === m ? "var(--red)" : "transparent",
-              borderRadius: 4,
-              transition: "background 0.2s, color 0.2s",
-            }}>
-            {m === "msa" ? "MSA" : "Full Attn"}
-          </button>
-        ))}
-      </div>
     </div>
   );
 }

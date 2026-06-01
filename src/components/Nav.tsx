@@ -1,3 +1,6 @@
+import { Collapsible } from "@base-ui/react/collapsible";
+import { Tooltip } from "@base-ui/react/tooltip";
+import { IconMenu2, IconX } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 
 const links = [
@@ -48,150 +51,108 @@ export function Nav() {
           : "border-b border-transparent bg-transparent"
       }`}
       style={{ padding: "0 var(--gutter)" }}>
-      <div className="page flex w-full items-center justify-between gap-3 md:gap-6">
-        <a
-          href="#main"
-          className="text-cream flex shrink-0 items-center gap-2.5 text-[17px] font-bold tracking-[-0.02em] md:text-[18px]"
-          style={{ fontFamily: "var(--font-display)" }}
-          aria-label="MiniMax home">
-          <Logo />
-          <span>
-            MiniMax<span className="text-red">.</span>M3
-          </span>
-        </a>
-
-        {/* Desktop nav links */}
-        <nav aria-label="Primary" className="hidden lg:flex lg:gap-1">
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="text-cream-dim hover:bg-red-faint hover:text-cream rounded-md px-3.5 py-2 text-[13.5px] font-medium transition-colors">
-              {l.label}
-            </a>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-2 md:gap-2.5">
-          <span
-            className="mono text-ash hidden items-center gap-1.5 text-[11px] md:inline-flex"
-            aria-label="Model version">
-            <span
-              aria-hidden
-              className="bg-red h-1.5 w-1.5 rounded-full"
-              style={{
-                boxShadow: "0 0 10px var(--color-red-glow)",
-                animation: "pulse 2s infinite",
-              }}
-            />
-            v3.0 · LIVE
-          </span>
+      <Collapsible.Root open={open} onOpenChange={setOpen} className="contents">
+        <div className="page flex w-full items-center justify-between gap-3 md:gap-6">
           <a
-            href="#api"
-            className="bg-red text-bg-0 hover:bg-red-bright rounded-md px-3.5 py-2 text-[12.5px] font-semibold transition-colors md:px-4 md:text-[13px]"
-            style={{ letterSpacing: "-0.005em" }}>
-            Try API →
+            href="#main"
+            className="text-cream flex shrink-0 items-center gap-2.5 text-[17px] font-bold tracking-[-0.02em] md:text-[18px]"
+            style={{ fontFamily: "var(--font-display)" }}
+            aria-label="MiniMax home">
+            <Logo />
+            <span>
+              MiniMax<span className="text-red">.</span>M3
+            </span>
           </a>
 
-          {/* Mobile menu toggle */}
-          <button
-            type="button"
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            onClick={() => setOpen((v) => !v)}
-            className="text-cream hover:text-red-bright grid h-10 w-10 place-items-center rounded-md transition-colors lg:hidden">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              aria-hidden
-              className="overflow-visible">
-              {open ? (
-                <>
-                  <line
-                    x1="4"
-                    y1="4"
-                    x2="16"
-                    y2="16"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinecap="square"
+          <div className="flex items-center gap-2 md:gap-2.5">
+            <Tooltip.Root>
+              <Tooltip.Trigger
+                delay={150}
+                render={
+                  <span
+                    aria-label="Model version"
+                    className="mono text-ash hidden items-center gap-1.5 text-[11px] md:inline-flex"
                   />
-                  <line
-                    x1="16"
-                    y1="4"
-                    x2="4"
-                    y2="16"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinecap="square"
-                  />
-                </>
-              ) : (
-                <>
-                  <line
-                    x1="3"
-                    y1="6"
-                    x2="17"
-                    y2="6"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinecap="square"
-                  />
-                  <line
-                    x1="3"
-                    y1="14"
-                    x2="17"
-                    y2="14"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinecap="square"
-                  />
-                </>
-              )}
-            </svg>
-          </button>
-        </div>
-      </div>
+                }>
+                <span
+                  aria-hidden
+                  className="bg-red h-1.5 w-1.5 rounded-full"
+                  style={{
+                    boxShadow: "0 0 10px var(--color-red-glow)",
+                    animation: "pulse 2s infinite",
+                  }}
+                />
+                v3.0 · LIVE
+              </Tooltip.Trigger>
+              <Tooltip.Portal>
+                <Tooltip.Positioner side="bottom" sideOffset={8}>
+                  <Tooltip.Popup className="mono text-cream-dim border-line-strong bg-bg-2/95 z-[60] rounded-md border px-2.5 py-1.5 text-[10.5px] tracking-[0.08em] shadow-[0_20px_60px_-20px_rgba(229,57,53,0.4)] backdrop-blur-md transition-[opacity,transform] duration-150 data-[ending-style]:translate-y-1 data-[ending-style]:opacity-0 data-[starting-style]:translate-y-1 data-[starting-style]:opacity-0">
+                    Production · M3.0 · Launched June 2026
+                  </Tooltip.Popup>
+                </Tooltip.Positioner>
+              </Tooltip.Portal>
+            </Tooltip.Root>
 
-      {/* Mobile menu panel */}
-      <div
-        id="mobile-menu"
-        className={`bg-bg-0/95 absolute inset-x-0 top-full overflow-hidden border-b [backdrop-filter:blur(20px)_saturate(160%)] transition-[max-height,opacity] duration-300 ease-out [transition-timing-function:var(--ease-out-quart)] lg:hidden ${
-          open
-            ? "border-line max-h-[calc(100vh-4.25rem)] opacity-100"
-            : "pointer-events-none max-h-0 border-transparent opacity-0"
-        }`}
-        style={{ padding: "0 var(--gutter)" }}>
-        <nav aria-label="Primary mobile" className="page flex w-full flex-col gap-1 py-5">
-          {links.map((l) => (
             <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setOpen(false)}
-              className="text-cream-dim hover:bg-red-faint hover:text-cream flex items-center justify-between rounded-md px-3 py-3 text-[15px] font-medium transition-colors">
-              <span>{l.label}</span>
-              <span aria-hidden className="text-ash text-[13px]">
-                ↗
-              </span>
+              href="#api"
+              className="bg-red text-bg-0 hover:bg-red-bright rounded-md px-3.5 py-2 text-[12.5px] font-semibold transition-colors md:px-4 md:text-[13px]"
+              style={{ letterSpacing: "-0.005em" }}>
+              Try API →
             </a>
-          ))}
-          <div className="border-line mt-3 flex items-center gap-2 border-t pt-4">
-            <span
-              className="bg-red h-1.5 w-1.5 rounded-full"
-              aria-hidden
-              style={{
-                boxShadow: "0 0 10px var(--color-red-glow)",
-                animation: "pulse 2s infinite",
-              }}
-            />
-            <span className="mono text-ash text-[10.5px] tracking-[0.12em] uppercase">
-              v3.0 · Live · SEHK 0100
-            </span>
+
+            {/* Mobile menu toggle */}
+            <Collapsible.Trigger
+              aria-label={open ? "Close menu" : "Open menu"}
+              className="text-cream hover:text-red-bright group grid h-10 w-10 cursor-pointer place-items-center rounded-md transition-colors lg:hidden">
+              <IconMenu2
+                aria-hidden
+                size={20}
+                stroke={1.6}
+                className="block group-data-[panel-open]:hidden"
+              />
+              <IconX
+                aria-hidden
+                size={20}
+                stroke={1.6}
+                className="hidden group-data-[panel-open]:block"
+              />
+            </Collapsible.Trigger>
           </div>
-        </nav>
-      </div>
+        </div>
+
+        <Collapsible.Panel
+          keepMounted
+          className="bg-bg-0/95 data-[open]:border-line absolute inset-x-0 top-full max-h-0 overflow-hidden border-b border-transparent opacity-0 [backdrop-filter:blur(20px)_saturate(160%)] transition-[max-height,opacity] duration-300 ease-out [transition-timing-function:var(--ease-out-quart)] data-[closed]:pointer-events-none data-[open]:max-h-[calc(100vh-4.25rem)] data-[open]:opacity-100 lg:hidden"
+          style={{ padding: "0 var(--gutter)" }}>
+          <nav aria-label="Primary mobile" className="page flex w-full flex-col gap-1 py-5">
+            {links.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={() => setOpen(false)}
+                className="text-cream-dim hover:bg-red-faint hover:text-cream flex items-center justify-between rounded-md px-3 py-3 text-[15px] font-medium transition-colors">
+                <span>{l.label}</span>
+                <span aria-hidden className="text-ash text-[13px]">
+                  ↗
+                </span>
+              </a>
+            ))}
+            <div className="border-line mt-3 flex items-center gap-2 border-t pt-4">
+              <span
+                className="bg-red h-1.5 w-1.5 rounded-full"
+                aria-hidden
+                style={{
+                  boxShadow: "0 0 10px var(--color-red-glow)",
+                  animation: "pulse 2s infinite",
+                }}
+              />
+              <span className="mono text-ash text-[10.5px] tracking-[0.12em] uppercase">
+                v3.0 · Live · SEHK 0100
+              </span>
+            </div>
+          </nav>
+        </Collapsible.Panel>
+      </Collapsible.Root>
     </header>
   );
 }

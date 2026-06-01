@@ -1,3 +1,4 @@
+import { Tooltip } from "@base-ui/react/tooltip";
 import { useReveal, useCounter } from "../lib/reveal";
 import { Reveal } from "./Reveal";
 
@@ -116,20 +117,41 @@ function MiniBarChart({ name, data }: { name: string; data: Bar[] }) {
                 }`}>
                 {d.name}
               </div>
+              <div
+                className={`mono text-center text-[9px] font-semibold ${
+                  d.highlight ? "text-red" : "text-cream"
+                }`}>
+                {d.value.toFixed(1)}
+              </div>
               <div className="flex w-full items-end" style={{ height: 110 }}>
-                <div
-                  className="relative w-full overflow-hidden rounded-t-[2px]"
-                  style={{
-                    height: inView ? `${heightPct}%` : "0%",
-                    transition: "height 1.1s var(--ease-out-expo)",
-                    background: d.highlight
-                      ? "linear-gradient(180deg, var(--color-red-bright), var(--color-red-deep))"
-                      : "linear-gradient(180deg, var(--color-bg-3), var(--color-bg-4))",
-                  }}>
-                  <div className="mono text-cream absolute top-1 right-0 left-0 text-center text-[9px] font-semibold">
-                    {d.value.toFixed(1)}
-                  </div>
-                </div>
+                <Tooltip.Root>
+                  <Tooltip.Trigger
+                    delay={150}
+                    render={
+                      <div
+                        className="w-full cursor-default overflow-hidden rounded-t-[2px]"
+                        style={{
+                          height: inView ? `${heightPct}%` : "0%",
+                          transition: "height 1.1s var(--ease-out-expo)",
+                          background: d.highlight
+                            ? "linear-gradient(180deg, var(--color-red-bright), var(--color-red-deep))"
+                            : "linear-gradient(180deg, var(--color-bg-3), var(--color-bg-4))",
+                        }}
+                      />
+                    }>
+                    <Tooltip.Portal>
+                      <Tooltip.Positioner side="top" sideOffset={6}>
+                        <Tooltip.Popup className="mono text-cream-dim border-line-strong bg-bg-2/95 z-[60] rounded-md border px-2.5 py-1.5 text-[10.5px] tracking-[0.08em] whitespace-nowrap shadow-[0_20px_60px_-20px_rgba(229,57,53,0.4)] backdrop-blur-md transition-[opacity,transform] duration-150 data-[ending-style]:translate-y-1 data-[ending-style]:opacity-0 data-[starting-style]:translate-y-1 data-[starting-style]:opacity-0">
+                          <span className={d.highlight ? "text-red" : "text-ash"}>{d.name}</span>
+                          <span className="text-cream ml-1.5 font-semibold">
+                            {d.value.toFixed(1)}
+                          </span>
+                          {d.highlight && <span className="text-ash ml-1.5">· our model</span>}
+                        </Tooltip.Popup>
+                      </Tooltip.Positioner>
+                    </Tooltip.Portal>
+                  </Tooltip.Trigger>
+                </Tooltip.Root>
               </div>
             </div>
           );

@@ -1,3 +1,4 @@
+import { Tooltip } from "@base-ui/react/tooltip";
 import { useReveal } from "../lib/reveal";
 import { Reveal } from "./Reveal";
 
@@ -135,15 +136,20 @@ export function Architecture() {
                   M2 · Full Attention
                 </div>
               </div>
-              <span
-                className="tag"
-                style={{
-                  background: "transparent",
-                  borderColor: "var(--color-line)",
-                  color: "var(--color-ash)",
-                }}>
-                O(n²)
-              </span>
+              <Tooltip.Root>
+                <Tooltip.Trigger
+                  delay={150}
+                  render={<span className="tag border-line text-ash cursor-help bg-transparent" />}>
+                  O(n²)
+                </Tooltip.Trigger>
+                <Tooltip.Portal>
+                  <Tooltip.Positioner side="top" sideOffset={6}>
+                    <Tooltip.Popup className="mono text-cream-dim border-line-strong bg-bg-2/95 z-[60] rounded-md border px-2.5 py-1.5 text-[10.5px] tracking-[0.08em] shadow-[0_20px_60px_-20px_rgba(229,57,53,0.4)] backdrop-blur-md transition-[opacity,transform] duration-150 data-[ending-style]:translate-y-1 data-[ending-style]:opacity-0 data-[starting-style]:translate-y-1 data-[starting-style]:opacity-0">
+                      Full attention: compute &amp; memory scale as n² with sequence length
+                    </Tooltip.Popup>
+                  </Tooltip.Positioner>
+                </Tooltip.Portal>
+              </Tooltip.Root>
             </div>
             <div
               className="border-line bg-bg-0 mb-5 rounded-lg border p-3"
@@ -176,7 +182,18 @@ export function Architecture() {
                   M3 · <span className="text-red">MSA</span>
                 </div>
               </div>
-              <span className="tag">O(n · k)</span>
+              <Tooltip.Root>
+                <Tooltip.Trigger delay={150} render={<span className="tag cursor-help" />}>
+                  O(n · k)
+                </Tooltip.Trigger>
+                <Tooltip.Portal>
+                  <Tooltip.Positioner side="top" sideOffset={6}>
+                    <Tooltip.Popup className="mono text-cream-dim border-line-strong bg-bg-2/95 z-[60] rounded-md border px-2.5 py-1.5 text-[10.5px] tracking-[0.08em] shadow-[0_20px_60px_-20px_rgba(229,57,53,0.4)] backdrop-blur-md transition-[opacity,transform] duration-150 data-[ending-style]:translate-y-1 data-[ending-style]:opacity-0 data-[starting-style]:translate-y-1 data-[starting-style]:opacity-0">
+                      MSA: scales as n·k — k is the constant block budget, not the sequence
+                    </Tooltip.Popup>
+                  </Tooltip.Positioner>
+                </Tooltip.Portal>
+              </Tooltip.Root>
             </div>
             <div
               className="border-line-strong bg-bg-0 relative mb-5 rounded-lg border p-3"

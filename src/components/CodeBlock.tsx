@@ -1,3 +1,6 @@
+import { Button } from "@base-ui/react/button";
+import { Progress } from "@base-ui/react/progress";
+import { Tabs } from "@base-ui/react/tabs";
 import { useEffect, useRef, useState } from "react";
 import { codeToHtml } from "shiki";
 import { Reveal } from "./Reveal";
@@ -152,25 +155,20 @@ export function CodeBlock() {
                 <span className="border-line bg-bg-4 block h-2.5 w-2.5 rounded-full border" />
               </div>
 
-              <div
-                className="mono border-line bg-bg-0 flex gap-1 rounded-md border p-[3px]"
-                role="tablist"
-                aria-label="Code sample">
-                {(["chat", "msa", "tools"] as const).map((s) => (
-                  <button
-                    key={s}
-                    role="tab"
-                    aria-selected={sample === s}
-                    onClick={() => setSample(s)}
-                    className={`mono rounded text-[10.5px] font-semibold tracking-[0.08em] uppercase transition-colors ${
-                      sample === s
-                        ? "bg-red text-bg-0 px-3 py-1.5"
-                        : "text-cream-dim hover:text-cream px-3 py-1.5"
-                    }`}>
-                    {s}
-                  </button>
-                ))}
-              </div>
+              <Tabs.Root value={sample} onValueChange={(v) => setSample(v as Sample)}>
+                <Tabs.List
+                  className="mono border-line bg-bg-0 flex gap-1 rounded-md border p-[3px]"
+                  aria-label="Code sample">
+                  {(["chat", "msa", "tools"] as const).map((s) => (
+                    <Tabs.Tab
+                      key={s}
+                      value={s}
+                      className="mono data-[active]:bg-red data-[active]:text-bg-0 text-cream-dim hover:text-cream cursor-pointer rounded px-3 py-1.5 text-[10.5px] font-semibold tracking-[0.08em] uppercase transition-colors">
+                      {s}
+                    </Tabs.Tab>
+                  ))}
+                </Tabs.List>
+              </Tabs.Root>
 
               <div className="mono text-ash ml-auto hidden text-[11px] tracking-[0.06em] md:block">
                 ~/m3-sdk · main
@@ -191,7 +189,7 @@ export function CodeBlock() {
                   <div className="mono text-ash text-[10px] tracking-[0.16em]">
                     CONSOLE · STREAM
                   </div>
-                  <button
+                  <Button
                     onClick={run}
                     disabled={running}
                     data-cursor="hover"
@@ -201,7 +199,7 @@ export function CodeBlock() {
                         : "bg-red text-bg-0 hover:bg-red-bright px-3.5 py-1.5"
                     }`}>
                     {running ? "⏵ running" : "▶ run"}
-                  </button>
+                  </Button>
                 </div>
 
                 <div className="mono border-line bg-bg-1 text-cream-dim relative min-h-[200px] flex-1 overflow-auto rounded-lg border p-4 text-[12px] leading-[1.7] whitespace-pre-wrap md:min-h-[280px] md:text-[12.5px]">
@@ -213,15 +211,18 @@ export function CodeBlock() {
                     />
                   )}
 
-                  <div className="bg-bg-3 absolute inset-x-0 bottom-0 h-0.5">
-                    <div
-                      className="bg-red h-full transition-[width] duration-75"
-                      style={{
-                        width: `${progress * 100}%`,
-                        boxShadow: "0 0 8px var(--color-red-glow)",
-                      }}
-                    />
-                  </div>
+                  <Progress.Root
+                    value={progress * 100}
+                    className="bg-bg-3 absolute inset-x-0 bottom-0 h-0.5 overflow-hidden">
+                    <Progress.Track className="h-full">
+                      <Progress.Indicator
+                        className="bg-red h-full transition-[width] duration-75"
+                        style={{
+                          boxShadow: "0 0 8px var(--color-red-glow)",
+                        }}
+                      />
+                    </Progress.Track>
+                  </Progress.Root>
                 </div>
 
                 <div className="border-line grid grid-cols-3 overflow-hidden rounded-lg border">

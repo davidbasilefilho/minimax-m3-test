@@ -1,5 +1,10 @@
+import { Tabs } from "@base-ui/react/tabs";
+import { Tooltip } from "@base-ui/react/tooltip";
+import { IconArrowRight } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { AttentionField } from "./AttentionField";
+
+type AttentionMode = "msa" | "full";
 
 const stats = [
   { v: "1,048,576", l: "context window", sub: "tokens", long: true },
@@ -10,6 +15,7 @@ const stats = [
 
 export function Hero() {
   const [time, setTime] = useState(() => new Date());
+  const [attnMode, setAttnMode] = useState<AttentionMode>("msa");
   useEffect(() => {
     const id = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(id);
@@ -44,15 +50,7 @@ export function Hero() {
           <div className="mb-10 flex flex-wrap items-center gap-3 md:mb-11">
             <a href="#api" data-cursor="hover" className="btn-primary whitespace-nowrap">
               Try the API
-              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden>
-                <path
-                  d="M1 7h11M8 3l4 4-4 4"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  fill="none"
-                  strokeLinecap="square"
-                />
-              </svg>
+              <IconArrowRight aria-hidden size={14} stroke={1.6} />
             </a>
             <a href="#architecture" data-cursor="hover" className="btn-ghost whitespace-nowrap">
               Read the report
@@ -90,13 +88,65 @@ export function Hero() {
           </div>
 
           <div className="mono text-ash mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[10.5px] tracking-[0.06em] md:mt-7 md:flex-nowrap md:gap-6 md:text-[11px]">
-            <span>SEHK · 0100</span>
-            <span className="text-line-strong">|</span>
-            <span>SHANGHAI LAB</span>
-            <span className="text-line-strong">|</span>
-            <span>EST. 2021</span>
-            <span className="text-line-strong">|</span>
-            <span className="text-red-bright">v3.0 / 2026-06-01</span>
+            <Tooltip.Root>
+              <Tooltip.Trigger delay={150} render={<span className="cursor-default" />}>
+                SEHK · 0100
+              </Tooltip.Trigger>
+              <Tooltip.Portal>
+                <Tooltip.Positioner side="top" sideOffset={6}>
+                  <Tooltip.Popup className="mono text-cream-dim border-line-strong bg-bg-2/95 z-[60] rounded-md border px-2.5 py-1.5 text-[10.5px] tracking-[0.08em] shadow-[0_20px_60px_-20px_rgba(229,57,53,0.4)] backdrop-blur-md transition-[opacity,transform] duration-150 data-[ending-style]:translate-y-1 data-[ending-style]:opacity-0 data-[starting-style]:translate-y-1 data-[starting-style]:opacity-0">
+                    Listed on the Hong Kong Stock Exchange · ticker 0100
+                  </Tooltip.Popup>
+                </Tooltip.Positioner>
+              </Tooltip.Portal>
+            </Tooltip.Root>
+            <span className="text-line-strong" aria-hidden>
+              |
+            </span>
+            <Tooltip.Root>
+              <Tooltip.Trigger delay={150} render={<span className="cursor-default" />}>
+                SHANGHAI LAB
+              </Tooltip.Trigger>
+              <Tooltip.Portal>
+                <Tooltip.Positioner side="top" sideOffset={6}>
+                  <Tooltip.Popup className="mono text-cream-dim border-line-strong bg-bg-2/95 z-[60] rounded-md border px-2.5 py-1.5 text-[10.5px] tracking-[0.08em] shadow-[0_20px_60px_-20px_rgba(229,57,53,0.4)] backdrop-blur-md transition-[opacity,transform] duration-150 data-[ending-style]:translate-y-1 data-[ending-style]:opacity-0 data-[starting-style]:translate-y-1 data-[starting-style]:opacity-0">
+                    MiniMax Group Inc. · research HQ in Shanghai
+                  </Tooltip.Popup>
+                </Tooltip.Positioner>
+              </Tooltip.Portal>
+            </Tooltip.Root>
+            <span className="text-line-strong" aria-hidden>
+              |
+            </span>
+            <Tooltip.Root>
+              <Tooltip.Trigger delay={150} render={<span className="cursor-default" />}>
+                EST. 2021
+              </Tooltip.Trigger>
+              <Tooltip.Portal>
+                <Tooltip.Positioner side="top" sideOffset={6}>
+                  <Tooltip.Popup className="mono text-cream-dim border-line-strong bg-bg-2/95 z-[60] rounded-md border px-2.5 py-1.5 text-[10.5px] tracking-[0.08em] shadow-[0_20px_60px_-20px_rgba(229,57,53,0.4)] backdrop-blur-md transition-[opacity,transform] duration-150 data-[ending-style]:translate-y-1 data-[ending-style]:opacity-0 data-[starting-style]:translate-y-1 data-[starting-style]:opacity-0">
+                    Founded 2021 · five years from lab to frontier
+                  </Tooltip.Popup>
+                </Tooltip.Positioner>
+              </Tooltip.Portal>
+            </Tooltip.Root>
+            <span className="text-line-strong" aria-hidden>
+              |
+            </span>
+            <Tooltip.Root>
+              <Tooltip.Trigger
+                delay={150}
+                render={<span className="text-red-bright cursor-default" />}>
+                v3.0 / 2026-06-01
+              </Tooltip.Trigger>
+              <Tooltip.Portal>
+                <Tooltip.Positioner side="top" sideOffset={6}>
+                  <Tooltip.Popup className="mono text-cream-dim border-line-strong bg-bg-2/95 z-[60] rounded-md border px-2.5 py-1.5 text-[10.5px] tracking-[0.08em] shadow-[0_20px_60px_-20px_rgba(229,57,53,0.4)] backdrop-blur-md transition-[opacity,transform] duration-150 data-[ending-style]:translate-y-1 data-[ending-style]:opacity-0 data-[starting-style]:translate-y-1 data-[starting-style]:opacity-0">
+                    Production launch · 1 June 2026 · M3.0 stable
+                  </Tooltip.Popup>
+                </Tooltip.Positioner>
+              </Tooltip.Portal>
+            </Tooltip.Root>
           </div>
         </div>
 
@@ -122,12 +172,25 @@ export function Hero() {
             );
           })}
 
-          <div className="mono text-ash absolute inset-x-3 top-3 z-2 flex justify-between text-[8.5px] tracking-[0.12em] uppercase md:inset-x-4 md:top-9 md:text-[9.5px]">
+          <div className="mono text-ash absolute inset-x-3 top-3 z-2 flex items-center justify-between text-[8.5px] tracking-[0.12em] uppercase md:inset-x-4 md:top-9 md:text-[9.5px]">
             <span>FIG. 01 / ATTENTION MAP</span>
-            <span className="text-red">● LIVE</span>
+            <Tabs.Root value={attnMode} onValueChange={(v) => setAttnMode(v as AttentionMode)}>
+              <Tabs.List className="border-line bg-bg-0/70 flex rounded border backdrop-blur-md">
+                <Tabs.Tab
+                  value="msa"
+                  className="data-[active]:bg-red data-[active]:text-bg-0 text-cream-dim rounded px-2 py-0.5 text-[9px] font-semibold tracking-[0.1em] uppercase">
+                  MSA
+                </Tabs.Tab>
+                <Tabs.Tab
+                  value="full"
+                  className="data-[active]:bg-red data-[active]:text-bg-0 text-cream-dim rounded px-2 py-0.5 text-[9px] font-semibold tracking-[0.1em] uppercase">
+                  Full
+                </Tabs.Tab>
+              </Tabs.List>
+            </Tabs.Root>
           </div>
 
-          <AttentionField />
+          <AttentionField mode={attnMode} />
 
           <div className="mono text-ash absolute inset-x-3 bottom-3 z-2 flex justify-between text-[8.5px] tracking-[0.12em] uppercase md:inset-x-4 md:bottom-9 md:text-[9.5px]">
             <span>1 block = 10,922 tokens</span>

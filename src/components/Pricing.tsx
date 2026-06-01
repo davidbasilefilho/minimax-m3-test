@@ -1,6 +1,23 @@
+import { Tabs } from "@base-ui/react/tabs";
+import { IconArrowRight } from "@tabler/icons-react";
+import { useState } from "react";
 import { Reveal } from "./Reveal";
 
-const plans = [
+type PlanName = "Open" | "API" | "Enterprise";
+
+type Plan = {
+  name: PlanName;
+  sub: string;
+  price: string;
+  period: string;
+  cta: string;
+  href: string;
+  features: string[];
+  accent: boolean;
+  badge?: string;
+};
+
+const plans: Plan[] = [
   {
     name: "Open",
     sub: "Open weights",
@@ -51,7 +68,75 @@ const plans = [
   },
 ];
 
+function PlanCard({ p }: { p: Plan }) {
+  return (
+    <div
+      className={`group relative flex h-full flex-col rounded-[14px] p-6 transition-transform duration-300 [transition-timing-function:var(--ease-out-quart)] hover:-translate-y-[3px] md:p-7 ${
+        p.accent
+          ? "border-red border shadow-[0_30px_80px_-30px_var(--color-red-glow)]"
+          : "border-line border"
+      }`}
+      style={{
+        background: p.accent
+          ? "linear-gradient(180deg, rgba(229,57,53,0.06) 0%, var(--color-bg-1) 60%)"
+          : "var(--color-bg-1)",
+      }}>
+      {p.badge && (
+        <div className="mono bg-red text-bg-0 absolute -top-2.5 left-6 rounded px-2.5 py-1 text-[9.5px] font-bold tracking-[0.16em] md:left-7">
+          {p.badge}
+        </div>
+      )}
+
+      <div className="mb-5 md:mb-6">
+        <div className="display text-cream text-[22px] font-bold tracking-[-0.02em] md:text-[24px]">
+          {p.name}
+        </div>
+        <div className="text-ash mt-1 text-[12.5px] md:text-[13px]">{p.sub}</div>
+      </div>
+
+      <div className="mb-5 md:mb-6">
+        <div
+          className={`display text-[clamp(36px,4vw,56px)] leading-none font-bold tracking-[-0.04em] ${
+            p.accent ? "text-red" : "text-cream"
+          }`}>
+          {p.price}
+        </div>
+        <div className="mono text-ash mt-2 text-[10.5px] tracking-[0.04em] md:text-[11px]">
+          {p.period}
+        </div>
+      </div>
+
+      <a
+        href={p.href}
+        data-cursor="hover"
+        className={`mb-6 inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 text-center text-[13.5px] font-semibold transition-colors md:mb-7 ${
+          p.accent
+            ? "bg-red text-bg-0 hover:bg-red-bright"
+            : "border-line-strong text-cream hover:border-red hover:bg-red-faint hover:text-red-bright border"
+        }`}>
+        {p.cta}
+        <IconArrowRight aria-hidden size={14} stroke={1.8} />
+      </a>
+
+      <ul className="mt-auto grid gap-3">
+        {p.features.map((f) => (
+          <li
+            key={f}
+            className="text-cream-dim flex gap-2.5 text-[13px] leading-[1.4] md:text-[13.5px]">
+            <span aria-hidden className="mono text-red mt-0.5 text-[12px]">
+              +
+            </span>
+            {f}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export function Pricing() {
+  const [selected, setSelected] = useState<PlanName>("API");
+
   return (
     <section
       id="pricing"
@@ -77,69 +162,40 @@ export function Pricing() {
           </p>
         </Reveal>
 
-        <div className="grid gap-4 md:gap-5 xl:grid-cols-3">
+        {/* Tabs layout — small screens only */}
+        <Tabs.Root
+          value={selected}
+          onValueChange={(v) => setSelected(v as PlanName)}
+          className="xl:hidden">
+          <Tabs.List
+            className="border-line bg-bg-1 mb-5 grid grid-cols-3 gap-1 rounded-[10px] border p-1"
+            aria-label="Pricing plans">
+            {plans.map((p) => (
+              <Tabs.Tab
+                key={p.name}
+                value={p.name}
+                className="data-[active]:bg-red data-[active]:text-bg-0 text-cream-dim hover:text-cream rounded-md px-2 py-2.5 text-center transition-colors">
+                <div className="mono text-[10px] font-semibold tracking-[0.14em] uppercase">
+                  {p.name}
+                </div>
+                <div className="display mt-0.5 text-[14px] font-bold tracking-[-0.02em]">
+                  {p.price}
+                </div>
+              </Tabs.Tab>
+            ))}
+          </Tabs.List>
+          {plans.map((p) => (
+            <Tabs.Panel key={p.name} value={p.name} className="focus:outline-none">
+              <PlanCard p={p} />
+            </Tabs.Panel>
+          ))}
+        </Tabs.Root>
+
+        {/* Grid layout — xl and up */}
+        <div className="hidden grid-cols-1 gap-4 md:gap-5 xl:grid xl:grid-cols-3">
           {plans.map((p, i) => (
-            <Reveal key={i} delay={i * 100}>
-              <div
-                className={`group relative flex h-full flex-col rounded-[14px] p-6 transition-transform duration-300 [transition-timing-function:var(--ease-out-quart)] hover:-translate-y-[3px] md:p-7 ${
-                  p.accent
-                    ? "border-red border shadow-[0_30px_80px_-30px_var(--color-red-glow)]"
-                    : "border-line border"
-                }`}
-                style={{
-                  background: p.accent
-                    ? "linear-gradient(180deg, rgba(229,57,53,0.06) 0%, var(--color-bg-1) 60%)"
-                    : "var(--color-bg-1)",
-                }}>
-                {p.badge && (
-                  <div className="mono bg-red text-bg-0 absolute -top-2.5 left-6 rounded px-2.5 py-1 text-[9.5px] font-bold tracking-[0.16em] md:left-7">
-                    {p.badge}
-                  </div>
-                )}
-
-                <div className="mb-5 md:mb-6">
-                  <div className="display text-cream text-[22px] font-bold tracking-[-0.02em] md:text-[24px]">
-                    {p.name}
-                  </div>
-                  <div className="text-ash mt-1 text-[12.5px] md:text-[13px]">{p.sub}</div>
-                </div>
-
-                <div className="mb-5 md:mb-6">
-                  <div
-                    className={`display text-[clamp(36px,4vw,56px)] leading-none font-bold tracking-[-0.04em] ${
-                      p.accent ? "text-red" : "text-cream"
-                    }`}>
-                    {p.price}
-                  </div>
-                  <div className="mono text-ash mt-2 text-[10.5px] tracking-[0.04em] md:text-[11px]">
-                    {p.period}
-                  </div>
-                </div>
-
-                <a
-                  href={p.href}
-                  data-cursor="hover"
-                  className={`mb-6 block rounded-lg px-4 py-3 text-center text-[13.5px] font-semibold transition-colors md:mb-7 ${
-                    p.accent
-                      ? "bg-red text-bg-0 hover:bg-red-bright"
-                      : "border-line-strong text-cream hover:border-red hover:bg-red-faint hover:text-red-bright border"
-                  }`}>
-                  {p.cta} →
-                </a>
-
-                <ul className="mt-auto grid gap-3">
-                  {p.features.map((f) => (
-                    <li
-                      key={f}
-                      className="text-cream-dim flex gap-2.5 text-[13px] leading-[1.4] md:text-[13.5px]">
-                      <span aria-hidden className="mono text-red mt-0.5 text-[12px]">
-                        +
-                      </span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            <Reveal key={p.name} delay={i * 100}>
+              <PlanCard p={p} />
             </Reveal>
           ))}
         </div>

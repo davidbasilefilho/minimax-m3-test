@@ -1,3 +1,4 @@
+import { IconCode, IconLayoutGrid, IconVideo } from "@tabler/icons-react";
 import { Reveal } from "./Reveal";
 
 const caps = [
@@ -10,17 +11,7 @@ const caps = [
       { k: "SWE-bench", v: "verified" },
       { k: "Tool use", v: "native" },
     ],
-    icon: (
-      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden>
-        <path
-          d="M9 8l-5 4 5 4M15 8l5 4-5 4M14 5l-4 14"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          fill="none"
-          strokeLinecap="square"
-        />
-      </svg>
-    ),
+    icon: <IconCode aria-hidden size={22} stroke={1.6} />,
   },
   {
     n: "02",
@@ -31,22 +22,7 @@ const caps = [
       { k: "Context", v: "1,048,576" },
       { k: "Decoding", v: "15.6× faster" },
     ],
-    icon: (
-      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden>
-        <rect
-          x="3"
-          y="4"
-          width="18"
-          height="16"
-          rx="2"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          fill="none"
-        />
-        <path d="M3 9h18M7 4v16" stroke="currentColor" strokeWidth="1.6" />
-        <circle cx="15" cy="14" r="2" fill="currentColor" />
-      </svg>
-    ),
+    icon: <IconLayoutGrid aria-hidden size={22} stroke={1.6} />,
   },
   {
     n: "03",
@@ -57,27 +33,7 @@ const caps = [
       { k: "Modalities", v: "text · image · video" },
       { k: "Training", v: "native from step 0" },
     ],
-    icon: (
-      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden>
-        <rect
-          x="2"
-          y="5"
-          width="14"
-          height="14"
-          rx="2"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          fill="none"
-        />
-        <path
-          d="M16 9l6-4v14l-6-4z"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          fill="none"
-          strokeLinejoin="miter"
-        />
-      </svg>
-    ),
+    icon: <IconVideo aria-hidden size={22} stroke={1.6} />,
   },
 ];
 
