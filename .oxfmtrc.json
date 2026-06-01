@@ -1,0 +1,46 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "useTabs": false,
+  "tabWidth": 2,
+  "endOfLine": "lf",
+  "printWidth": 100,
+  "bracketSameLine": true,
+  "bracketSpacing": true,
+  "singleQuote": false,
+  "jsxSingleQuote": false,
+  "quoteProperties": "as-needed",
+  "trailingComma": "all",
+  "semicolons": true,
+  "arrowParens": "always",
+  "sortImports": {
+    "enabled": true,
+    "partitionByNewline": true,
+    "partitionByComment": true,
+    "newlinesBetween": false,
+    "groups": ["builtin", "external", "internal", ["parent", "sibling", "index"], "type"]
+  },
+  "sortPackageJson": {
+    "enabled": true,
+    "sortOrder": [
+      "name",
+      "version",
+      "private",
+      "type",
+      "description",
+      "scripts",
+      "dependencies",
+      "devDependencies",
+      "peerDependencies",
+      "optionalDependencies",
+      "engines",
+      "browserslist"
+    ]
+  },
+  "sortTailwindcss": {
+    "enabled": true,
+    "sortOrder": "official",
+    "attributes": ["class", "className", "tw", "twMerge"],
+    "functions": ["clsx", "cn", "twMerge", "tw"]
+  },
+  "ignorePatterns": ["node_modules", "dist", "build", "*.lockb"]
+}
