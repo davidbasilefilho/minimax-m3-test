@@ -29,8 +29,7 @@ export function Footer() {
               <span className="serif-italic text-red-bright">
                 "Co-create intelligence with everyone."
               </span>{" "}
-              An open-weight frontier model from a Shanghai lab, listed on the Hong Kong Stock
-              Exchange.
+              A frontier model from a Shanghai lab, listed on the Hong Kong Stock Exchange.
             </p>
             <div className="mono text-ash flex flex-wrap gap-x-3 gap-y-1 text-[10px] tracking-[0.1em] md:text-[10.5px] md:tracking-[0.12em]">
               <span>SHANGHAI</span>

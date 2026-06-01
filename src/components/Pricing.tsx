@@ -3,14 +3,14 @@ import { Reveal } from "./Reveal";
 const plans = [
   {
     name: "Open",
-    sub: "Weights only",
+    sub: "Open weights",
     price: "$0",
-    period: "forever",
-    cta: "Download weights",
+    period: "details announced soon",
+    cta: "Notify me",
     href: "#",
     features: [
-      "Full M3-7B / M3-40B checkpoints",
-      "Apache-2.0 license",
+      "Full M3 checkpoint",
+      "Open license (terms TBA)",
       "Run locally, no telemetry",
       "Self-host inference",
     ],
@@ -72,8 +72,8 @@ export function Pricing() {
 
         <Reveal delay={140}>
           <p className="text-cream-dim mb-14 max-w-[680px] text-[16px]">
-            We're a public company that still believes in open weights. Pick hosted convenience or
-            run the model on your own metal. No fine print.
+            We're a public company building for developers. Pick hosted convenience today and open
+            weights when they ship. No fine print.
           </p>
         </Reveal>
 

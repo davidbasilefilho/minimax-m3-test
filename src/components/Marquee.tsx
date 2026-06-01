@@ -1,5 +1,5 @@
 const items = [
-  "OPEN WEIGHTS",
+  "WEIGHTS-AVAILABLE",
   "·",
   "MSA: MiniMax Sparse Attention",
   "·",

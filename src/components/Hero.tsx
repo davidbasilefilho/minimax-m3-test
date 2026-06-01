@@ -36,9 +36,8 @@ export function Hero() {
           </h1>
 
           <p className="text-cream-dim mb-8 max-w-[540px] text-[16px] leading-[1.55] font-normal md:mb-9 md:text-[18px]">
-            MiniMax M3 is the first open-weight model to combine frontier-level coding, a
-            1-million-token context window, and native image &amp; video understanding — all in one
-            model. Built on{" "}
+            MiniMax M3 is the first model to combine frontier-level coding, a 1-million-token
+            context window, and native image &amp; video understanding — all in one model. Built on{" "}
             <span className="serif-italic text-red-bright">MiniMax Sparse Attention</span>.
           </p>
 
