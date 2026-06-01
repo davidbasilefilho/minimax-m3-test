@@ -42,3 +42,7 @@ Thumbs.db
 
 # Bun
 # (keep bun.lock — committed for reproducible installs)
+
+# Tool artifacts
+.playwright-mcp/
+benchmarks-desktop.png
