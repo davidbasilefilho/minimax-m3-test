@@ -165,17 +165,17 @@ export function AttentionField({ mode }: { mode: "msa" | "full" }) {
       ctx.lineTo(fieldX + 80, fieldY - 14);
       ctx.stroke();
       ctx.font = '10px "JetBrains Mono", monospace';
-      ctx.fillStyle = "rgba(229,57,53,0.9)";
       ctx.textBaseline = "middle";
-      ctx.fillText("Q·" + String(queryPos).padStart(3, "0"), fieldX, fieldY - 18);
 
-      // Live readout on right
+      const qLabel = "Q·" + String(queryPos).padStart(3, "0");
+      ctx.fillStyle = "rgba(229,57,53,0.9)";
+      ctx.fillText(qLabel, fieldX, fieldY - 18);
+      const qLabelW = ctx.measureText(qLabel).width;
+
       const readout = mode === "msa" ? "MSA · SPARSE" : "FULL ATTENTION";
-      ctx.font = '10px "JetBrains Mono", monospace';
       ctx.fillStyle = "rgba(250,245,240,0.45)";
       const text = readout + " · 1.0M TOK";
-      const tw = ctx.measureText(text).width;
-      ctx.fillText(text, fieldX + fieldW - tw, fieldY - 18);
+      ctx.fillText(text, fieldX + qLabelW + 10, fieldY - 18);
 
       // Mouse cursor ring
       if (mouseRef.current.active) {

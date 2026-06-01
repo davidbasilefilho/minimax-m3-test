@@ -26,10 +26,7 @@ const stream = await client.chat.completions.create({
 for await (const chunk of stream) {
   process.stdout.write(chunk.choices[0]?.delta?.content ?? "");
 }`,
-  msa: `# MSA is on by default at > 32K context.
-# Override the block budget if you want to spend more.
-
-curl https://api.minimax.io/v1/chat/completions \\
+  curl: `curl https://api.minimax.io/v1/chat/completions \\
   -H "Authorization: Bearer $MINIMAX_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
@@ -58,7 +55,7 @@ type Sample = keyof typeof SAMPLES;
 
 const LANG: Record<Sample, string> = {
   chat: "typescript",
-  msa: "bash",
+  curl: "bash",
   tools: "typescript",
 };
 
@@ -159,12 +156,14 @@ export function CodeBlock() {
                 <Tabs.List
                   className="mono border-line bg-bg-0 flex gap-1 rounded-md border p-[3px]"
                   aria-label="Code sample">
-                  {(["chat", "msa", "tools"] as const).map((s) => (
+                  {(["chat", "curl", "tools"] as const).map((s) => (
                     <Tabs.Tab
                       key={s}
                       value={s}
-                      className="mono data-[active]:bg-red data-[active]:text-bg-0 text-cream-dim hover:text-cream cursor-pointer rounded px-3 py-1.5 text-[10.5px] font-semibold tracking-[0.08em] uppercase transition-colors">
-                      {s}
+                      className={`mono data-[active]:bg-red data-[active]:text-bg-0 text-cream-dim hover:text-cream cursor-pointer rounded px-3 py-1.5 text-[10.5px] font-semibold tracking-[0.08em] uppercase transition-colors ${
+                        s === "curl" ? "normal-case" : ""
+                      }`}>
+                      {s === "curl" ? "cURL" : s}
                     </Tabs.Tab>
                   ))}
                 </Tabs.List>
